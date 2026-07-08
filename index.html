@@ -31,7 +31,11 @@
     <div class="modal-backdrop" data-modal-close></div>
     <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <button class="modal-close" type="button" aria-label="Close modal" data-modal-close>×</button>
-      <img id="modalImage" class="modal-image" alt="" />
+      <div class="modal-media">
+        <img id="modalImage" class="modal-image" alt="" />
+        <video id="modalVideo" class="modal-video" controls></video>
+        <a id="modalLink" class="modal-link" href="#" target="_blank" rel="noreferrer noopener">Open video in a new tab</a>
+      </div>
       <div class="modal-content">
         <h2 id="modalTitle"></h2>
         <p id="modalDate" class="modal-date"></p>

@@ -8,6 +8,8 @@ const getImagesButton = document.querySelector('.filters button');
 const gallery = document.getElementById('gallery');
 const imageModal = document.getElementById('imageModal');
 const modalImage = document.getElementById('modalImage');
+const modalVideo = document.getElementById('modalVideo');
+const modalLink = document.getElementById('modalLink');
 const modalTitle = document.getElementById('modalTitle');
 const modalDate = document.getElementById('modalDate');
 const modalExplanation = document.getElementById('modalExplanation');
@@ -30,13 +32,37 @@ function setLoadingState(isLoading) {
 	}
 }
 
-function openModal(item) {
-	const imageUrl = item.media_type === 'video'
-		? item.thumbnail_url || createFallbackPreview(item.title)
-		: item.url;
-
-	modalImage.src = imageUrl;
+function showImageMedia(item) {
+	modalImage.hidden = false;
+	modalImage.src = item.url;
 	modalImage.alt = item.title;
+	modalVideo.hidden = true;
+	modalVideo.removeAttribute('src');
+	modalVideo.innerHTML = '';
+	modalLink.hidden = true;
+}
+
+function showVideoMedia(item) {
+	modalImage.hidden = true;
+	modalImage.removeAttribute('src');
+	modalImage.alt = '';
+
+	modalVideo.hidden = false;
+	modalVideo.src = item.url;
+	modalVideo.load();
+
+	modalLink.hidden = false;
+	modalLink.href = item.url;
+	modalLink.textContent = 'Open video in a new tab';
+}
+
+function openModal(item) {
+	if (item.media_type === 'video') {
+		showVideoMedia(item);
+	} else {
+		showImageMedia(item);
+	}
+
 	modalTitle.textContent = item.title;
 	modalDate.textContent = item.date;
 	modalExplanation.textContent = item.explanation;
@@ -51,6 +77,12 @@ function closeModal() {
 	imageModal.setAttribute('aria-hidden', 'true');
 	document.body.classList.remove('modal-lock');
 	modalImage.src = '';
+	modalImage.hidden = false;
+	modalVideo.pause();
+	modalVideo.removeAttribute('src');
+	modalVideo.innerHTML = '';
+	modalVideo.hidden = true;
+	modalLink.hidden = true;
 }
 
 function escapeXml(text) {
