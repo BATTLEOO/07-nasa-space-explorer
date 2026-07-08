@@ -21,9 +21,20 @@ function renderGallery(items) {
 		const card = document.createElement('article');
 		card.className = 'gallery-item';
 
-		const media = item.media_type === 'image'
-			? `<img src="${item.url}" alt="${item.title}" loading="lazy" />`
-			: `<iframe src="${item.url}" title="${item.title}" loading="lazy" allowfullscreen></iframe>`;
+		let media = '';
+
+		if (item.media_type === 'image') {
+			media = `<img src="${item.url}" alt="${item.title}" loading="lazy" />`;
+		} else if (item.media_type === 'video') {
+			media = `
+				<video controls preload="metadata">
+					<source src="${item.url}" type="video/mp4" />
+					Your browser cannot play this video.
+				</video>
+			`;
+		} else {
+			media = `<a href="${item.url}" target="_blank" rel="noreferrer">Open media</a>`;
+		}
 
 		card.innerHTML = `
 			${media}
