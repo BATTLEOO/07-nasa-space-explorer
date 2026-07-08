@@ -15,9 +15,25 @@ const modalDate = document.getElementById('modalDate');
 const modalExplanation = document.getElementById('modalExplanation');
 const modalCloseButton = document.querySelector('.modal-close');
 const modalCloseButtons = document.querySelectorAll('[data-modal-close]');
+const spaceFactText = document.getElementById('spaceFactText');
+
+const spaceFacts = [
+	'NASA was founded in 1958 and sent its first human into space just three years later.',
+	'The International Space Station travels around Earth at about 17,500 miles per hour.',
+	'One day on Venus is longer than one year on Venus.',
+	'APOD has been sharing a new astronomy image or video almost every day since 1995.',
+	'The Sun contains more than 99 percent of the solar system’s total mass.',
+	'There are more possible games of chess than there are atoms in the observable universe.',
+	'The Andromeda Galaxy is the nearest major galaxy to the Milky Way and is on a collision course with it.'
+];
 
 // Set up the date inputs so they always stay in NASA's valid date range.
 setupDateInputs(startInput, endInput);
+
+function showRandomSpaceFact() {
+	const randomIndex = Math.floor(Math.random() * spaceFacts.length);
+	spaceFactText.textContent = spaceFacts[randomIndex];
+}
 
 function showMessage(message) {
 	gallery.innerHTML = `<div class="placeholder"><p>${message}</p></div>`;
@@ -174,6 +190,7 @@ async function fetchApodData() {
 }
 
 // Load the default 9-day range as soon as the page opens.
+showRandomSpaceFact();
 fetchApodData();
 
 // Load the selected 9-day range when the button is clicked.
