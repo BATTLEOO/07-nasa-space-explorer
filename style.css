@@ -170,8 +170,29 @@ button:active {
   border-radius: 10px;
 }
 
+.gallery-item img {
+  transition: transform 0.35s ease;
+  transform-origin: center;
+}
+
+.gallery-image-button:hover img,
+.gallery-image-button:focus-visible img {
+  transform: scale(1.06);
+}
+
 .gallery-item video {
   background: #000;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-item img {
+    transition: none;
+  }
+
+  .gallery-image-button:hover img,
+  .gallery-image-button:focus-visible img {
+    transform: none;
+  }
 }
 
 .gallery-item a {
