@@ -21,6 +21,15 @@ function showMessage(message) {
 	gallery.innerHTML = `<div class="placeholder"><p>${message}</p></div>`;
 }
 
+function setLoadingState(isLoading) {
+	gallery.setAttribute('aria-busy', String(isLoading));
+	getImagesButton.disabled = isLoading;
+
+	if (isLoading) {
+		showMessage('Loading space images...');
+	}
+}
+
 function openModal(item) {
 	const imageUrl = item.media_type === 'video'
 		? item.thumbnail_url || createFallbackPreview(item.title)
@@ -110,7 +119,7 @@ async function fetchApodData() {
 		return;
 	}
 
-	showMessage('Loading space images...');
+	setLoadingState(true);
 
 	try {
 		const apiUrl = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&start_date=${startDate}&end_date=${endDate}&thumbs=true`;
@@ -127,6 +136,8 @@ async function fetchApodData() {
 	} catch (error) {
 		console.error(error);
 		showMessage('Sorry, we could not load the APOD data right now.');
+	} finally {
+		setLoadingState(false);
 	}
 }
 
