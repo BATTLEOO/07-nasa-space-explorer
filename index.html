@@ -27,6 +27,19 @@
     </div>
   </div>
 
+  <div id="imageModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop" data-modal-close></div>
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" type="button" aria-label="Close modal" data-modal-close>×</button>
+      <img id="modalImage" class="modal-image" alt="" />
+      <div class="modal-content">
+        <h2 id="modalTitle"></h2>
+        <p id="modalDate" class="modal-date"></p>
+        <p id="modalExplanation"></p>
+      </div>
+    </div>
+  </div>
+
   <script src="js/dateRange.js"></script>
   <script src="js/script.js"></script>
 </body>
