@@ -15,7 +15,6 @@ const modalDate = document.getElementById('modalDate');
 const modalExplanation = document.getElementById('modalExplanation');
 const modalCloseButton = document.querySelector('.modal-close');
 const modalCloseButtons = document.querySelectorAll('[data-modal-close]');
-const spaceFactText = document.getElementById('spaceFactText');
 
 const spaceFacts = [
 	'NASA was founded in 1958 and sent its first human into space just three years later.',
@@ -30,13 +29,22 @@ const spaceFacts = [
 // Set up the date inputs so they always stay in NASA's valid date range.
 setupDateInputs(startInput, endInput);
 
-function showRandomSpaceFact() {
-	const randomIndex = Math.floor(Math.random() * spaceFacts.length);
-	spaceFactText.textContent = spaceFacts[randomIndex];
-}
-
 function showMessage(message) {
 	gallery.innerHTML = `<div class="placeholder"><p>${message}</p></div>`;
+}
+
+function showLoadingMessage() {
+	const randomIndex = Math.floor(Math.random() * spaceFacts.length);
+	const randomFact = spaceFacts[randomIndex];
+
+	gallery.innerHTML = `
+		<div class="placeholder loading-placeholder">
+			<div class="placeholder-icon">🔭</div>
+			<p class="loading-message">Loading space images...</p>
+			<p class="space-fact-label">Did You Know?</p>
+			<p class="space-fact-text">${randomFact}</p>
+		</div>
+	`;
 }
 
 function setLoadingState(isLoading) {
@@ -44,7 +52,7 @@ function setLoadingState(isLoading) {
 	getImagesButton.disabled = isLoading;
 
 	if (isLoading) {
-		showMessage('Loading space images...');
+		showLoadingMessage();
 	}
 }
 
@@ -190,7 +198,6 @@ async function fetchApodData() {
 }
 
 // Load the default 9-day range as soon as the page opens.
-showRandomSpaceFact();
 fetchApodData();
 
 // Load the selected 9-day range when the button is clicked.
